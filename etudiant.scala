@@ -13,6 +13,17 @@ class Etudiant(nomEtu:String, prenomEtu:String,ageEtu:Int,adresseEtu:String) {
     }
     override def toString():String=nom+" "+prenom+" "+age+" "+adresse
 }
+// class note(numero etudiant, nom du module, la note)
+class Note(numEtu:Int, nomMod:String, notes:Int){
+    var numero: Int=numEtu
+    var module: String=nomMod
+    var note: Int=notes
+    def changeNote(newNote:Int)
+    {
+        note=newNote
+    }
+    override def toString():String="L'étudiant "+numero+" en "+module+" a eu "+note
+}
 object STID2{
     def main(args: Array[String]) {
         val etudiant1 = new Etudiant("Jean", "Philippe", 20, "15 rue de niort, 79000")
@@ -26,6 +37,9 @@ object STID2{
         println(etudiant1.toString())
         // un 2eme objet
         val etudiant2= new Etudiant("zoe", "lavieille", 19, "5 rue du Galuchet niort, 79000")
+        etudiant2.changeAdresse("395 rue de la Vanille")
         println(etudiant2.toString())
+        val note1= new Note(1,"mathématiques",17)
+        println(note1.toString())
     }
 }
