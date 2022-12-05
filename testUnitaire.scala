@@ -47,18 +47,55 @@ class Rating(revueID:Int, movieID:Int, stars:Int, rgDate:String){
     {
         date = format.parse(newDate)
     }
-    override def toString():String=rID+" "+mID+" "+etoile+" "+format+" "+date
+    override def toString():String=rID+" "+mID+" "+etoile+" "+date
 }
 
 object Film{
-    def main(args: Array[String]) {
-        val film1 = new Movie(1, "yoyo", 2020, "Philippe Lavieille")
-        println(film1.toString())
-        val revue1 = new Reviewer(1, "coucou")
-        println(revue1.toString())
-        val rating1 = new Rating(1,1,1,"2018-03-03")
-        println(rating1.toString())
-        rating1.changeDate("2001-10-15")
-        println(rating1.toString())
+    def loadMovieData(path:String):Array[Movie]=
+    {
+        var movies:Array[Movie]=Array.empty
+        val bufferedSource = io.Source.fromFile(path)
+        for (line <- bufferedSource.getLines){
+            var values = line.split(",").map(_.trim)
+            val movie = new Movie(values(0).toInt,values(1),values(2).toInt,values(3))
+            movies = movies :+ movie
+        }
+        bufferedSource.close
+        return movies;    
+    }
+     def loadReviewerData(path:String):Array[Reviewer]=
+    {
+        var reviewers:Array[Reviewer]=Array.empty
+        val bufferedSource = io.Source.fromFile(path)
+        for (line <- bufferedSource.getLines){
+            var values = line.split(",").map(_.trim)
+            val reviewer = new Reviewer(values(0).toInt,values(1))
+            reviewers = reviewers :+ reviewer
+        }
+        bufferedSource.close
+        return reviewers;    
+    }
+    def loadRatingData(path:String):Array[Rating]=
+    {
+        var ratings:Array[Rating]=Array.empty
+        val bufferedSource = io.Source.fromFile(path)
+        for (line <- bufferedSource.getLines){
+            var values = line.split(",").map(_.trim)
+            val rating = new Rating(values(0).toInt,values(1).toInt,values(2).toInt,values(3).substring(1,values(3).length()-1))
+            ratings = ratings :+ rating
+        }
+        bufferedSource.close
+        return ratings;    
+    }
+   
+    def main(args: Array[String]) {        
+        var movies : Array[Movie] =loadMovieData("data/movie.csv")
+        println(movies(0))
+        var reviewers : Array[Reviewer]=loadReviewerData("data/reviewer.csv")
+        println(reviewers(0)) 
+        var ratings : Array[Rating]=loadRatingData("data/rating.csv")
+        println(ratings(0))
+
     }
 }
+
