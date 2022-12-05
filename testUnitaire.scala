@@ -85,7 +85,11 @@ object Film{
             ratings = ratings :+ rating
         }
         bufferedSource.close
-        return ratings;    
+        return ratings;   
+    }
+    def ex01_q01(movies:Array[Movie])
+    {
+        movies.filter(_.director=="\"Steven Spielberg\"").foreach(println)
     }
    
     def main(args: Array[String]) {        
@@ -95,6 +99,7 @@ object Film{
         println(reviewers(0)) 
         var ratings : Array[Rating]=loadRatingData("data/rating.csv")
         println(ratings(0))
+        ex01_q01(movies)
 
     }
 }
