@@ -91,16 +91,30 @@ object Film{
     {
         movies.filter(_.director=="\"Steven Spielberg\"").foreach(println)
     }
-   
+    
+    def ex01_q02(ratings:Array[Rating]):Array[Rating]=
+    {
+        // rating.filter(_.etoile>3).foreach(x=>println(extractFilm(x.mID,movies)(0)))
+        ratings.filter(_.etoile>3)
+    }
+  
+   def extractFilm(p_mID: Int, movies:Array[Movie]): Array[Movie]=
+   {
+        return movies.filter(_.mID == p_mID)
+
+   }
     def main(args: Array[String]) {        
         var movies : Array[Movie] =loadMovieData("data/movie.csv")
-        println(movies(0))
+            /*println(movies(0))*/
         var reviewers : Array[Reviewer]=loadReviewerData("data/reviewer.csv")
-        println(reviewers(0)) 
+            /*println(reviewers(0))*/ 
         var ratings : Array[Rating]=loadRatingData("data/rating.csv")
-        println(ratings(0))
-        ex01_q01(movies)
-
+            /*println(ratings(0))*/
+            
+            /*ex01_q01(movies)*/
+            ex01_q02(ratings).map(x=>extractFilm(x.mID,movies)(0).year).distinct.sorted.foreach(println)
+            //map =trimap dans taled; et on fait un distinct dans l'ordre croissant 
+        println(extractFilm(101,movies))
     }
 }
 
