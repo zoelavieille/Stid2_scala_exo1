@@ -94,15 +94,27 @@ object Film{
     
     def ex01_q02(ratings:Array[Rating]):Array[Rating]=
     {
-        // rating.filter(_.etoile>3).foreach(x=>println(extractFilm(x.mID,movies)(0)))
         ratings.filter(_.etoile>3)
     }
-  
+    
    def extractFilm(p_mID: Int, movies:Array[Movie]): Array[Movie]=
    {
         return movies.filter(_.mID == p_mID)
 
    }
+
+
+    def ex01_q03 (movies:Array[Movie]):Array[Movie] = {
+        return movies.filter(_.title == "\"Gone with the Wind\"")
+    }
+    def bonFilm (p_mID : Int, movies:Array[Rating]):Array[Rating] = {
+        return movies.filter(_.mID == p_mID)
+    }
+    def bonNom (p_rID : Int, reviewers:Array[Reviewer]):Array[Reviewer] = {
+        return reviewers.filter(_.rID == p_rID)
+    }
+
+
     def main(args: Array[String]) {        
         var movies : Array[Movie] =loadMovieData("data/movie.csv")
             /*println(movies(0))*/
@@ -111,10 +123,20 @@ object Film{
         var ratings : Array[Rating]=loadRatingData("data/rating.csv")
             /*println(ratings(0))*/
             
-            /*ex01_q01(movies)*/
-            ex01_q02(ratings).map(x=>extractFilm(x.mID,movies)(0).year).distinct.sorted.foreach(println)
-            //map =trimap dans taled; et on fait un distinct dans l'ordre croissant 
-        println(extractFilm(101,movies))
-    }
-}
+        /*ex01_q01(movies)*/
 
+        //ex01_q02(ratings).map(x=>extractFilm(x.mID,movies)(0).year).distinct.sorted.foreach(println)
+        //map =trimap dans taled; et on fait un distinct dans l'ordre croissant 
+
+        //println(extractFilm(101,movies))
+       
+        //ex01_q03(Movies).foreach(println)
+        //bonFilm(101,Ratings).distinct.foreach(println)
+        // bonNom(201,Reviewers).foreach(println)
+        
+         ex01_q03(movies).flatMap(x => bonFilm(x.mID,ratings)).map(z => bonNom(z.rID,reviewers)(0).name).distinct.foreach(println)
+        // plusieurs trucs, ça les compile en liste ou tableau
+
+    }
+
+}
